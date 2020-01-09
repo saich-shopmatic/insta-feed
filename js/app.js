@@ -15,7 +15,6 @@ async function fetchAccessToken(code) {
     if (!!code) {
         const response = await fetch(ACCESSTOKEN_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify(params) 
             })
             return await response.json();
