@@ -6,7 +6,7 @@ const GRANT_TYPE= 'authorization_code'
 const ACCESSTOKEN_URL = 'https://api.instagram.com/oauth/access_token'
 
 function authUser() {
-    location.href = new URL(AUTH_URL)
+    location.href = JSON.stringify(AUTH_URL)
     console.log('Page is redirecting to: ', AUTH_URL)
 }
 
