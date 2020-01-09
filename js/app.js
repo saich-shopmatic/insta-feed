@@ -8,4 +8,16 @@ let user_id = ''
 
 function authUser() {
     location.href = AUTH_URL
+    console.log('Page is redirecting to: ', AUTH_URL)
+}
+
+function fetchAuthCode() {
+    let params = (new URL(document.location)).searchParams
+    if (!!params.get('code')) {
+        code = params.get('code')
+        console.log('Auth code:', code)
+    } else {
+        code = ''
+        console.log('no Code found in request params.', code)
+    }
 }
