@@ -2,13 +2,27 @@ const AUTH_URL = 'https://api.instagram.com/oauth/authorize?app_id=5544725751394
 const APP_ID = '554472575139442'
 const APP_SECRET = '70a56acaa155786732231f381d84a2e9' 
 const REDIRECT_URI = 'https://saich-shopmatic.github.io/insta-feed/'
-let code = ''
-let accessToken= ''
-let user_id = ''
+const GRANT_TYPE= 'authorization_code'
+const ACCESSTOKEN_URL = 'https://api.instagram.com/oauth/access_token'
 
 function authUser() {
     location.href = AUTH_URL
     console.log('Page is redirecting to: ', AUTH_URL)
+}
+
+async function fetchAccessToken(code) {
+    params = {app_id: APP_ID, app_secret: APP_SECRET, grant_type: GRANT_TYPE, redirect_uri: REDIRECT_URI, code: code }
+    if (!!code) {
+        const response = await fetch(ACCESSTOKEN_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify(params) 
+            })
+            return await response.json();
+    }  else {
+        console.log('No code arg found in fetchAccessToken')
+        return {}
+    }
 }
 
 function fetchAuthCode() {
@@ -16,8 +30,10 @@ function fetchAuthCode() {
     if (!!params.get('code')) {
         code = params.get('code')
         console.log('Auth code:', code)
+        let userInfo = fetchAccessToken(code)
+        console.log(userInfo)
     } else {
         code = ''
-        console.log('no Code found in request params.', code)
+        console.log('No Code found in request params.', code)
     }
 }
