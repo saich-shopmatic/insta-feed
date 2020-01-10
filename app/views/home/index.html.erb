@@ -1,25 +1,47 @@
 
   <h1>Rails App - Shopmatic Insta Feed</h1>
 
-  <a href="/oauth/connect">Connect with Instagram</a>
+<% unless session[:access_token].present? && session[:user_id].present? %>
+  <div class="instgram connect btn">
+    <a href="/oauth/connect">Connect with Instagram</a>
+  </div>
+<% end %>
 
-  <%= "Your AccessToken: #{@access_token}" %>
+  <div class="Your Instagram Credentials are: ">
+    <ul>
+      <li><%#= "AccessToken: #{session[:access_token]}"%></li>
+      <li><%#= "user ID: #{session[:user_id]}" %></li>
+    </ul>
+  </div>
 
-  <%= "You user ID: #{@user_id}" %>
+  <div class="navigation">
+      <ol>
+      <li><a href='/user_media_feed'>User Media Feed</a> Calls user_media_feed - Get the currently authenticated user's media feed uses pagination</li>
+    </ol>
+  </div>
 
   <div id="instafeed">
-    <a href="https://www.instagram.com/p/BosX1Dgn7qD/" target="_blank" id="1885987144931981955_8987997106">
-      <img src="https://scstylecaster.files.wordpress.com/2019/02/kardashian-quotes.jpg">
-    </a>
-    <a href="https://www.instagram.com/p/BosXrtFn9CX/" target="_blank" id="1885986502381392023_8987997106">
-      <img src="https://i.ytimg.com/vi/QJc-8fFQgkA/maxresdefault.jpg">
-    </a>
-  
-    <a href="https://www.instagram.com/p/BosXfu4nVd1/" target="_blank" id="1885985679676888949_8987997106">
-      <img src="https://dynaimage.cdn.cnn.com/cnn/c_fill,g_auto,w_1200,h_675,ar_16:9/https%3A%2F%2Fcdn.cnn.com%2Fcnnnext%2Fdam%2Fassets%2F200103015545-03-australia-fire-0102.jpg">
-    </a>
-    <a href="https://www.instagram.com/p/BosXXQ7nNLp/" target="_blank" id="1885985097759118057_8987997106">
-      <img src="https://cdn.abcotvs.com/dip/images/5822577_01072020-ewn-5am-24charged-australian-fires-vid.jpg?w=1600">
-    </a>
-  
+      <% if @user_media.present? %>
+        <% @user_media["media"]["data"].each do |media_obj| %>
+          <div class="insta-feed-card">
+            <%=link_to( image_tag(media_obj['media_info']['media_url']), :class=>"insta-feed-image", id: media_obj['media_info']['id']) %>
+           </div>
+        <% end %>
+
+      <% else %>
+        <a href="https://www.instagram.com/p/BosX1Dgn7qD/" target="_blank" id="1885987144931981955_8987997106">
+          <img src="https://scstylecaster.files.wordpress.com/2019/02/kardashian-quotes.jpg">
+        </a>
+        <a href="https://www.instagram.com/p/BosXrtFn9CX/" target="_blank" id="1885986502381392023_8987997106">
+          <img src="https://i.ytimg.com/vi/QJc-8fFQgkA/maxresdefault.jpg">
+        </a>
+      
+        <a href="https://www.instagram.com/p/BosXfu4nVd1/" target="_blank" id="1885985679676888949_8987997106">
+          <img src="https://dynaimage.cdn.cnn.com/cnn/c_fill,g_auto,w_1200,h_675,ar_16:9/https%3A%2F%2Fcdn.cnn.com%2Fcnnnext%2Fdam%2Fassets%2F200103015545-03-australia-fire-0102.jpg">
+        </a>
+        <a href="https://www.instagram.com/p/BosXXQ7nNLp/" target="_blank" id="1885985097759118057_8987997106">
+          <img src="https://cdn.abcotvs.com/dip/images/5822577_01072020-ewn-5am-24charged-australian-fires-vid.jpg?w=1600">
+        </a>
+    <% end %>
+
   </div>

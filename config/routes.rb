@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   match 'oauth/connect', to: 'instagram#connect', via: [:get]
   match 'oauth/callback/', to: 'instagram#callback', via: [:all]
-
+  match 'user_media_feed', to: 'instagram#user_media_feed', via: [:get]
 
     #Callback URL
     #match '/oauth/callback/'

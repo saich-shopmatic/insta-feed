@@ -21,6 +21,10 @@ body {
   background: gainsboro;
 }
 
+ul li {
+  list-style: none;
+}
+
 #instafeed {
   max-width: 1080px;
   width: 100%;
