@@ -78,6 +78,8 @@ AUTH_URL = "https://api.instagram.com/oauth/authorize?app_id=#{APP_ID}&redirect_
     if session[:expires_at] < Time.zone.now
       session[:access_token] = nil
       session[:user_id] = nil
+      session[:user_name] = nil
+      session[:media_count] = nil
     end
 
     if session[:user_id].present? && session[:access_token].present?
@@ -88,6 +90,8 @@ AUTH_URL = "https://api.instagram.com/oauth/authorize?app_id=#{APP_ID}&redirect_
       if response["media"]["data"].present?
         response["media"]["data"].map { |media| media["media_info"] = fetch_media_info(media["id"]) }
       end
+      session[:user_name] = response["username"]
+      session[:media_count] = response["media_count"]
       redirect_to controller: 'home', action: 'index',  user_media: response 
     else 
       redirect_to controller: 'home', action: 'index',  user_media: nil

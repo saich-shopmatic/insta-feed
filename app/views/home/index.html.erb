@@ -1,16 +1,14 @@
 
   <h1>Rails App - Shopmatic Insta Feed</h1>
 
-<% unless session[:access_token].present? && session[:user_id].present? %>
-  <div class="instgram connect btn">
-    <a href="/oauth/connect">Connect with Instagram</a>
-  </div>
-<% end %>
 
   <div class="Your Instagram Credentials are: ">
     <ul>
-      <li><%#= "AccessToken: #{session[:access_token]}"%></li>
-      <li><%#= "user ID: #{session[:user_id]}" %></li>
+      <li><%= "Logged as a: #{session[:user_name]}" if session[:user_name].present? %></li>
+      <li><%= "Media Count: #{session[:media_count]}" if session[:media_count].present? %></li>
+      <li><%= link_to("Home", root_path) %></li>
+      <li><%= link_to("Connect with Instagram", "/oauth/connect")  if !(session[:access_token].present? && session[:user_id].present?) %></li>
+      <li><%#= debug @user_media %></li>
     </ul>
   </div>
 
@@ -24,7 +22,7 @@
       <% if @user_media.present? %>
         <% @user_media["media"]["data"].each do |media_obj| %>
           <div class="insta-feed-card">
-            <%=link_to( image_tag(media_obj['media_info']['media_url']), :class=>"insta-feed-image", id: media_obj['media_info']['id']) %>
+            <%= link_to( image_tag(media_obj['media_info']['media_url']), :class=>"insta-feed-image", id: media_obj['media_info']['id'])  %>
            </div>
         <% end %>
 
