@@ -1,7 +1,7 @@
 class InstagramController < ApplicationController
 
-APP_ID = '2442856189377592'
-APP_SECRET = 'f67fddd13316758175939c5fe0aaaca5' 
+APP_ID = 'shopmatic-2442856189377592'
+APP_SECRET = 'shopmatic-f67fddd13316758175939c5fe0aaaca5' 
 REDIRECT_URI =  'https://1b222f40.ngrok.io/oauth/callback'   ##'https://saich-insta-feed.herokuapp.com/oauth/callback/'
 GRANT_TYPE = 'authorization_code'
 ACCESSTOKEN_URL = 'https://api.instagram.com/oauth/access_token'
